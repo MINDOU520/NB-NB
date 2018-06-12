@@ -1,0 +1,16 @@
+﻿using Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace IDAL
+{
+    public interface IVideos
+    {
+        IEnumerable<Video> GetVideosTop12();
+
+        IEnumerable<Video> GetAllVideos();
+    }
+}

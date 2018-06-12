@@ -1,0 +1,110 @@
+﻿@model App.Models.VideoViewModel
+@using Models;
+@{
+    ViewBag.Title = "PlayVideo";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="container">
+    <div class="play-video">
+        <video src="@Html.DisplayFor(model => model.Video.VSavepath)" controls="controls"></video>
+    </div>
+    <div class="video-info">
+        <h4>视频信息</h4>
+        <div style="padding: 20px;">
+            <h3>@Html.DisplayFor(model => model.Video.VName)</h3>
+            <p><span class="glyphicon glyphicon-time"> @Html.DisplayFor(model => model.Video.VTime)</span></p>
+        </div>
+    </div>
+    <hr />
+    <h3>发表评论</h3>
+    <div class="news-area">
+        @using (Html.BeginForm("Comment", "Videos", FormMethod.Post, new { id = "Comment", @class = "postbox" }))
+        {
+            <div class="row">
+                <div class="textarea-wrapper col-lg-10 col-md-10 col-sm-10 col-xs-8">
+                    <textarea id="Commenttextarea" class="textarea" name="Commenttextarea"></textarea>
+                </div>
+                <input type="hidden" name="vid" value="@Model.Video.VID" />
+                @if (Session["UserName"] != null)
+                {
+                    <a href="javascript:document.getElementById('Comment').submit()" class="btn btn-success col-lg-2 col-md-2 col-sm-2 col-xs-4">发表评论</a>
+                }
+                else
+                {
+                    <a href="@Url.Action("Index", "Login")" class="btn btn-success col-lg-2 col-md-2 col-sm-2 col-xs-4">发表评论</a>
+                }
+            </div>
+        }
+    </div>
+    <div class="new-comment col-lg-3 col-md-3">
+        <h4><span>全部评论</span></h4>
+        @foreach (VideoComment n in Model.VideoComment1)
+        {
+
+            if (Session["UserName"] != null)
+            {
+                <a href="@Url.Action("Index","User", new { id =n.UserID})">
+                    <img class="img-circle" src="@n.Users.UserAvatar" />
+                </a>
+                <span><a href="@Url.Action("Index","User", new { id =n.UserID})"> @n.Users.UserName</a></span>
+            }
+            else
+            {
+                <a href="@Url.Action("Index","Login")">
+                    <img class="img-circle" src="@n.Users.UserAvatar" />
+                </a>
+                <span><a href="@Url.Action("Index","Login")">@n.Users.UserName</a></span>
+            }
+            <div class="news-comm">
+                <div class="nccontent">@Html.Raw(n.VCContent)</div>
+                <span class="glyphicon glyphicon-time"> @String.Format("{0:yyyy-MM-dd HH:mm}", n.VCTime)</span>
+                <span class="rep">回复</span>
+
+                @using (Html.BeginForm("Reply", "Videos", FormMethod.Post, new { id = "Reply", @class = "rep-postbox" }))
+                {
+                    <div class="row">
+                        <div class="textarea-wrapper col-lg-10 col-md-10 col-sm-10 col-xs-8">
+                            <textarea id="Commenttextareas" class="textarea" name="Commenttextareas"></textarea>
+                        </div>
+                        <input type="hidden" name="vid" value="@Model.Video.VID" />
+                        <input type="hidden" name="vcid" value="@n.VCID" />
+                        @if (Session["UserName"] != null)
+                        {
+                            <a href="javascript:document.getElementById('Reply').submit()" class="btn btn-success col-lg-2 col-md-2 col-sm-2 col-xs-4">回复</a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Index", "Login")" class="btn btn-success col-lg-2 col-md-2 col-sm-2 col-xs-4">回复</a>
+                        }
+                    </div>
+                }
+                @foreach (VideoReply r in Model.VideoReply1.Where(o => o.VCID == n.VCID))
+                {
+                    <div class="reply-content">
+                        @if (Session["UserName"] != null)
+                        {
+                            <a href="@Url.Action("Index","User", new { id =r.UserID})">
+                                <img class="img-circle" src="@r.Users.UserAvatar" width="20" height="20" />
+                            </a>
+                            <span><a href="@Url.Action("Index","User", new { id =r.UserID})"> @r.Users.UserName</a></span>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Index","Login")">
+                                <img class="img-circle" src="@r.Users.UserAvatar" width="20" height="20" />
+                            </a>
+                            <span><a href="@Url.Action("Index","Login")">@r.Users.UserName</a></span>
+                        }
+                        <div class="news-comm">
+                            <div>@Html.Raw(r.VRContent)</div>
+                            <span class="glyphicon glyphicon-time"> @String.Format("{0:yyyy-MM-dd HH:mm}", r.VRTime)</span>
+
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+

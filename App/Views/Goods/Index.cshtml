@@ -1,0 +1,173 @@
+﻿@using Models;
+@model App.Models.GoodsViewModel
+@{
+    ViewBag.Title = "NBNB-商城";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        <div class="new-search">
+            <span class="glyphicon glyphicon-search"></span>
+            @Html.TextBox("SearchString", "", new { @class = "search-text", placeholder = "输入你想搜索的商品" })
+            <input type="submit" value="搜索" class="btn btn-info" />
+        </div>    
+    }
+    <div class="goods-type">
+        <div class="row">
+            <div class="type1 type-active col-lg-2 col-md-2 col-sm-2 col-xs-2">全部</div>
+            <div class="type2 col-lg-2 col-md-2 col-sm-2 col-xs-2">篮球</div>
+            <div class="type3 col-lg-2 col-md-2 col-sm-2 col-xs-2">球服</div>
+            <div class="type4 col-lg-2 col-md-2 col-sm-2 col-xs-2">球鞋</div>
+            <div class="type5 col-lg-2 col-md-2 col-sm-2 col-xs-2">护具</div>
+            <div class="type6 col-lg-2 col-md-2 col-sm-2 col-xs-2">其他</div>
+        </div>
+    </div>
+    <ul class="goods-ul">
+        <li class="allgoods-li">
+            <div class="Allgoods">
+                <div class="row">
+                    @foreach (Goods item in Model.Goods1)
+                    {
+                        <div class="goods-view col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                            <div class="goods-view-info">
+                                <a href="@Url.Action("GoodsDetails","Goods", new { id =item.GID})">
+                                    <div class="goods-view-img">
+                                        <img src="@Html.DisplayFor(modelItem => item.GPhoto)" />
+                                        <div id="content">
+                                            <h3>查看详情</h3>
+                                            <p id="click">点击购买</p>
+                                        </div>
+                                    </div>
+                                    <span>￥:@Html.DisplayFor(modelItem => item.GPrice)</span>
+                                    <div>@Html.DisplayFor(modelItem => item.GName)</div>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </li>
+        <li class="basketball-li">
+            <div class="goods-basketball">
+                <div class="row">
+                    @foreach (Goods item in Model.Basketball)
+                    {
+                        <div class="goods-view col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                            <div class="goods-view-info">
+                                <a href="@Url.Action("GoodsDetails","Goods", new { id =item.GID})">
+                                    <div class="goods-view-img">
+                                        <img src="@Html.DisplayFor(modelItem => item.GPhoto)" />
+                                        <div id="content">
+                                            <h3>查看详情</h3>
+                                            <p id="click">点击购买</p>
+                                        </div>
+                                    </div>
+                                    <span>￥:@Html.DisplayFor(modelItem => item.GPrice)</span>
+                                    <div>@Html.DisplayFor(modelItem => item.GName)</div>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </li>
+        <li class="clothes-li">
+            <div class="goods-clothes">
+                <div class="row">
+                    @foreach (Goods item in Model.Clothes)
+                    {
+                        <div class="goods-view col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                            <div class="goods-view-info">
+                                <a href="@Url.Action("GoodsDetails","Goods", new { id =item.GID})">
+                                    <div class="goods-view-img">
+                                        <img src="@Html.DisplayFor(modelItem => item.GPhoto)" />
+                                        <div id="content">
+                                            <h3>查看详情</h3>
+                                            <p id="click">点击购买</p>
+                                        </div>
+                                    </div>
+                                    <span>￥:@Html.DisplayFor(modelItem => item.GPrice)</span>
+                                    <div>@Html.DisplayFor(modelItem => item.GName)</div>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </li>
+        <li class="shose-li">
+            <div class="goods-shose">
+                <div class="row">
+                    @foreach (Goods item in Model.Shose)
+                    {
+                        <div class="goods-view col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                            <div class="goods-view-info">
+                                <a href="@Url.Action("GoodsDetails","Goods", new { id =item.GID})">
+                                    <div class="goods-view-img">
+                                        <img src="@Html.DisplayFor(modelItem => item.GPhoto)" />
+                                        <div id="content">
+                                            <h3>查看详情</h3>
+                                            <p id="click">点击购买</p>
+                                        </div>
+                                    </div>
+                                    <span>￥:@Html.DisplayFor(modelItem => item.GPrice)</span>
+                                    <div>@Html.DisplayFor(modelItem => item.GName)</div>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </li>
+        <li class="protective-li">
+            <div class="goods-protective">
+                <div class="row">
+                    @foreach (Goods item in Model.Protective)
+                    {
+                        <div class="goods-view col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                            <div class="goods-view-info">
+                                <a href="@Url.Action("GoodsDetails","Goods", new { id =item.GID})">
+                                    <div class="goods-view-img">
+                                        <img src="@Html.DisplayFor(modelItem => item.GPhoto)" />
+                                        <div id="content">
+                                            <h3>查看详情</h3>
+                                            <p id="click">点击购买</p>
+                                        </div>
+                                    </div>
+                                    <span>￥:@Html.DisplayFor(modelItem => item.GPrice)</span>
+                                    <div>@Html.DisplayFor(modelItem => item.GName)</div>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </li>
+        <li class="other-li">
+            <div class="goods-other">
+                <div class="row">
+                    @foreach (Goods item in Model.Other)
+                    {
+                        <div class="goods-view col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                            <div class="goods-view-info">
+                                <a href="@Url.Action("GoodsDetails","Goods", new { id =item.GID})">
+                                    <div class="goods-view-img">
+                                        <img src="@Html.DisplayFor(modelItem => item.GPhoto)" />
+                                        <div id="content">
+                                            <h3>查看详情</h3>
+                                            <p id="click">点击购买</p>
+                                        </div>
+                                    </div>
+                                    <span>￥:@Html.DisplayFor(modelItem => item.GPrice)</span>
+                                    <div>@Html.DisplayFor(modelItem => item.GName)</div>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </li>
+    </ul>   
+</div>

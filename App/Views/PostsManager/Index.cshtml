@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Models.Posts>
+
+@{
+    ViewBag.Title = "NBNB-管理员-帖子";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="manager-head">
+    <div class="container">
+        <div class="manager-header">
+            <span>NBNB篮球约战平台后台管理系统</span>
+            <span>管理员: @Session["MGName"]</span>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="manager-type col-lg-2 col-md-2 col-sm-2 col-xs-4">
+            <ul>
+                <li><a href="/NewsManager/Index">战报管理</a></li>
+                <li class="type-active"><a href="/PostsManager/Index">帖子管理</a></li>
+                <li><a href="/GoodsManager/Index">商品管理</a></li>
+                <li><a href="/UsersManager/Index">用户管理</a></li>
+                <li><a href="/VideosManager/Index">视频管理</a></li>
+                <li><a href="#">评论管理</a></li>
+                <li><a href="#">用户留言</a></li>
+            </ul>
+        </div>
+        <div class="manager-body col-lg-10 col-md-10 col-sm-10 col-xs-8">
+            @using (Html.BeginForm())
+            {
+                <div class="new-search">
+                    <span class="glyphicon glyphicon-search"></span>
+                    @Html.TextBox("SearchString", "", new { @class = "manager-search-text", placeholder = "输入你想搜索的帖子" })
+                    <input type="submit" value="搜索" class="btn btn-info" />
+                    <a href="/PostsManager/Create"><span class="glyphicon glyphicon-plus" title="添加帖子"></span></a>
+                </div>
+            }
+            <table class="table table-hover">
+                <tr>
+                    <th>
+                        标题
+                    </th>
+                    <th>
+                        时间
+                    </th>
+                    <th>
+                        内容
+                    </th>
+
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PTime)
+                        </td>
+                        <td>
+                            @Html.ActionLink("修改", "Edit", new { id = item.PID }) |
+                            @Html.ActionLink("详情", "Details", new { id = item.PID }) |
+                            @Html.ActionLink("删除", "Delete", new { id = item.PID })
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

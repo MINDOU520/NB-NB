@@ -1,0 +1,55 @@
+﻿@model PagedList.IPagedList<Models.News>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "NBNB-战报";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        <div class="new-search">
+            <span class="glyphicon glyphicon-search"></span> 
+            @Html.TextBox("SearchString", "", new { @class = "search-text", placeholder = "输入你想搜索的战报"})
+            <input type="submit" value="搜索" class="btn btn-info" />
+        </div>    
+    }
+    <div class="news">
+        <div class="row">
+            <div class="news-list col-lg-8 col-md-8">
+                @foreach (var item in Model)
+                {
+                    <a href="@Url.Action("Details","News", new { id =item.NID})">
+                        <div class="all-news">                       
+                            <span>@Html.DisplayFor(modelItem => item.NTitle)</span>  
+                            <span>@String.Format("{0:yyyy-MM-dd HH:mm}", item.NTime)</span>
+                        </div>
+                    </a>   
+                }
+                <div class="page">
+                    每页 @Model.PageSize 条记录，共 @Model.PageCount 页，当前第 @Model.PageNumber 页
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                </div>
+            </div>
+            <div class="hot-topic col-lg-4 col-md-4">
+                <h4>热门话题</h4>
+                <span class="glyphicon glyphicon-tags"> 勒布朗.詹姆斯</span>
+                <span class="glyphicon glyphicon-tags"> 詹姆斯.哈登</span>
+                <span class="glyphicon glyphicon-tags"> 凯文.杜兰特</span>
+                <span class="glyphicon glyphicon-tags"> 德维恩.韦德</span>
+                <span class="glyphicon glyphicon-tags"> 保罗.乔治</span>
+                <span class="glyphicon glyphicon-tags"> 科比.布莱恩特</span>
+                <span class="glyphicon glyphicon-tags"> 史蒂芬.库里</span>
+                <span class="glyphicon glyphicon-tags"> 安东尼.戴维斯</span>
+                <span class="glyphicon glyphicon-tags"> 考瓦伊.莱纳德</span>
+                <span class="glyphicon glyphicon-tags"> 克里斯.保罗</span>
+                <span class="glyphicon glyphicon-tags"> 凯里.欧文</span>
+                <span class="glyphicon glyphicon-tags"> 卡梅隆.安东尼</span>
+                <span class="glyphicon glyphicon-tags"> 马努.吉诺比利</span>
+                <span class="glyphicon glyphicon-tags"> 迈克尔.乔丹</span>
+                <span class="glyphicon glyphicon-tags"> 蒂姆.邓肯</span>
+                <span class="glyphicon glyphicon-tags"> 拉塞尔.维斯布鲁克</span>
+            </div>
+        </div>
+    </div>   
+</div>

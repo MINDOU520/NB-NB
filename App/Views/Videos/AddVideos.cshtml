@@ -1,0 +1,54 @@
+﻿@model Models.Video
+@{
+    ViewBag.Title = "NBNB-上传视频";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="container">
+    <h2 class="text-center">上传视频</h2>
+    <h4 class="warn text-center">本平台禁止上传违规视频，一经查出，封号处理！！！</h4>
+    @using (Html.BeginForm("AddVideos", "Videos", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <table class="table table-hover">
+            <tr>
+                <td>视频名称</td>
+                <td>
+                    @Html.EditorFor(model => model.VName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.VName, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    上传视频
+                </td>
+                <td>
+                    <span class="glyphicon glyphicon-cloud-upload">
+                        <input type="file" name="VideoFile" class="file-btn" />
+                    </span>
+                    <span>点击上传视频</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    上传视频封面图
+                </td>
+                <td>
+                    <span class="glyphicon glyphicon-cloud-upload">
+                        <input type="file" name="Vimage" class="file-btn" />
+                    </span>
+                    <span>点击上传视频封面图片</span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="text-center">
+                    <input type="submit" value="上传视频" class="btn btn-success" />
+                    @Html.ActionLink("返回视频主页", "Index")
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+

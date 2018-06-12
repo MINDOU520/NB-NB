@@ -1,0 +1,41 @@
+﻿@model Models.Match
+@{
+    ViewBag.Title = "NBNB-发布赛事";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="container">
+    <div style="position: relative;height: 600px;">
+        <div class="loginbox" style="padding: 10px;top: 50px;z-index: 0;">
+            <h2 class="text-center">发布赛事</h2>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div style="margin: 30px 0;">
+                    <span>赛事名称：</span>
+                    @Html.EditorFor(model => model.MName)
+                    @Html.ValidationMessageFor(model => model.MName)
+                </div>
+                <div style="margin: 30px 0;">
+                    <span>参赛人数：</span>
+                    @Html.EditorFor(model => model.MNum)
+                    @Html.ValidationMessageFor(model => model.MNum)
+                </div>
+                <div style="margin: 30px 0;">
+                    <span>比赛地点：</span>
+                    @Html.EditorFor(model => model.MAdder)
+                    @Html.ValidationMessageFor(model => model.MAdder)
+                </div>
+                <div style="margin: 30px 0;">
+                    <span>比赛时间：</span>
+                    @Html.EditorFor(model => model.MAddtime)
+                    @Html.ValidationMessageFor(model => model.MAddtime)
+                </div>
+                <div class="text-center" style="margin: 30px 0;">
+                    <input type="submit" value="发布" class="btn btn-success" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

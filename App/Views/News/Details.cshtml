@@ -1,0 +1,110 @@
+﻿@using Models;
+@model App.Models.NewsViewModel
+@{
+    ViewBag.Title = "NBNB-战报阅读";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="news-detail col-lg-9 col-md-9 col-sm-12 col-xs-12">
+            <div class="news-read">
+                <h2>@Model.News.NTitle</h2>
+                <h5>@String.Format("{0:yyyy-MM-dd HH:mm}", Model.News.NTime)</h5>
+                <div class="new-body">
+                    @Html.Raw(HttpUtility.HtmlDecode(Model.News.NContent))
+                </div>
+                <div class="read-end">
+                    <p>~END~</p>
+                </div>
+            </div>
+            <div class="news-area">
+                @using (Html.BeginForm("Comment", "News", FormMethod.Post, new { id = "Comment", @class = "postbox" }))
+                {
+                    <div class="row">
+                        <div class="textarea-wrapper col-lg-10 col-md-10 col-sm-10 col-xs-8">
+                            <textarea id="Commenttextarea" class="textarea" name="Commenttextarea"></textarea>
+                        </div>
+                        <input type="hidden" name="nid" value="@Model.News.NID" />
+                        @if (Session["UserName"] != null)
+                        {
+                        <a href="javascript:document.getElementById('Comment').submit()" class="btn btn-success col-lg-2 col-md-2 col-sm-2 col-xs-4">发表评论</a>
+                        }
+                        else
+                        {
+                        <a href="@Url.Action("Index", "Login")" class="btn btn-success col-lg-2 col-md-2 col-sm-2 col-xs-4">发表评论</a>
+                        }
+                    </div>
+                }
+            </div>           
+        </div>
+        <div class="new-comment col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <h4><span>全部评论</span></h4>
+            @foreach (NewsComment n in Model.NewsComment1)
+            {
+
+                if (Session["UserName"] != null)
+                {
+                    <a href="@Url.Action("Index","User", new { id =n.UserID})">
+                        <img class="img-circle" src="@n.Users.UserAvatar" />
+                    </a>
+                    <span><a href="@Url.Action("Index","User", new { id =n.UserID})"> @n.Users.UserName</a></span>
+                }
+                else
+                {
+                    <a href="@Url.Action("Index","Login")">
+                        <img class="img-circle" src="@n.Users.UserAvatar" />
+                    </a>
+                    <span><a href="@Url.Action("Index","Login")">@n.Users.UserName</a></span>
+                }
+                <div class="news-comm">
+                    <div class="nccontent">@Html.Raw(n.NCContent)</div>
+                    <span class="glyphicon glyphicon-time"> @String.Format("{0:yyyy-MM-dd HH:mm}", n.NCTime)</span>
+                    <span class="rep">回复</span>
+
+                    @using (Html.BeginForm("Reply", "News", FormMethod.Post, new { id = "Reply", @class = "rep-postbox" }))
+                    {
+                        <div class="row">
+                            <div class="textarea-wrapper col-lg-8 col-md-8 col-sm-10 col-xs-8">
+                                <textarea id="Commenttextareas" class="textarea" name="Commenttextareas"></textarea>
+                            </div>
+                            <input type="hidden" name="nid" value="@Model.News.NID" />
+                            <input type="hidden" name="ncid" value="@n.NCID" />
+                            @if (Session["UserName"] != null)
+                            {
+                                <a href="javascript:document.getElementById('Reply').submit()" class="btn btn-success col-lg-4 col-md-4 col-sm-2 col-xs-4">回复</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Index", "Login")" class="btn btn-success col-lg-4 col-md-4 col-sm-2 col-xs-4">回复</a>
+                            }
+                        </div>
+                    }
+                    @foreach (NewsReply r in Model.NewsReply1.Where(o => o.NCID == n.NCID))
+                    {
+                        <div class="reply-content">
+                            @if (Session["UserName"] != null)
+                            {
+                            <a href="@Url.Action("Index","User", new { id =r.UserID})">
+                                <img class="img-circle" src="@r.Users.UserAvatar" width="20" height="20" />
+                            </a>
+                            <span><a href="@Url.Action("Index","User", new { id =r.UserID})"> @r.Users.UserName</a></span>
+                            }
+                            else
+                            {
+                            <a href="@Url.Action("Index","Login")">
+                                <img class="img-circle" src="@r.Users.UserAvatar" width="20" height="20" />
+                            </a>
+                            <span><a href="@Url.Action("Index","Login")">@r.Users.UserName</a></span>
+                            }
+                            <div class="news-comm">
+                                <div>@Html.Raw(r.NRContent)</div>
+                                <span class="glyphicon glyphicon-time"> @String.Format("{0:yyyy-MM-dd HH:mm}", r.NRTime)</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

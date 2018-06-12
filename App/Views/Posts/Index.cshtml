@@ -1,0 +1,61 @@
+﻿@model PagedList.IPagedList<Models.Posts>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "NBNB-论坛";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        <div style="position: relative;">
+            <div class="new-search">
+                <span class="glyphicon glyphicon-search"></span>
+                @Html.TextBox("SearchString", "", new { @class = "search-text", placeholder = "输入你想搜索的帖子" })
+                <input type="submit" value="搜索" class="btn btn-info" />
+            </div>
+            <a href="/Posts/AddPosts" style="position: absolute;top: 15px;right: 6px;font-size: 20px;">
+                <span class="glyphicon glyphicon-plus" title="发布帖子"></span>
+            </a>
+        </div>
+    }
+    <div class="posts">
+        <div class="row">
+            <div class="posts-list col-lg-8 col-md-8">
+                @foreach (var item in Model)
+                {
+                    <a href="@Url.Action("Details","Posts", new { id =item.PID})">
+                        <div class="all-news">                       
+                            <span>@Html.DisplayFor(modelItem => item.PTitle)</span>  
+                            <span>@String.Format("{0:yyyy-MM-dd HH:mm}", item.PTime)</span>
+                        </div>
+                    </a>   
+                }
+                <div class="page">
+                    每页 @Model.PageSize 条记录，共 @Model.PageCount 页，当前第 @Model.PageNumber 页
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                </div>
+            </div>
+            <div class="hot-topic col-lg-4 col-md-4">
+                <h4>活跃用户</h4>
+                <span class="glyphicon glyphicon-user"> 勒布朗.詹姆斯</span>
+                <span class="glyphicon glyphicon-user"> 詹姆斯.哈登</span>
+                <span class="glyphicon glyphicon-user"> 凯文.杜兰特</span>
+                <span class="glyphicon glyphicon-user"> 德维恩.韦德</span>
+                <span class="glyphicon glyphicon-user"> 保罗.乔治</span>
+                <span class="glyphicon glyphicon-user"> 科比.布莱恩特</span>
+                <span class="glyphicon glyphicon-user"> 史蒂芬.库里</span>
+                <span class="glyphicon glyphicon-user"> 安东尼.戴维斯</span>
+                <span class="glyphicon glyphicon-user"> 考瓦伊.莱纳德</span>
+                <span class="glyphicon glyphicon-user"> 克里斯.保罗</span>
+                <span class="glyphicon glyphicon-user"> 凯里.欧文</span>
+                <span class="glyphicon glyphicon-user"> 卡梅隆.安东尼</span>
+                <span class="glyphicon glyphicon-user"> 马努.吉诺比利</span>
+                <span class="glyphicon glyphicon-user"> 迈克尔.乔丹</span>
+                <span class="glyphicon glyphicon-user"> 蒂姆.邓肯</span>
+                <span class="glyphicon glyphicon-user"> 拉塞尔.维斯布鲁克</span>
+            </div>
+        </div>
+    </div>
+</div>
+

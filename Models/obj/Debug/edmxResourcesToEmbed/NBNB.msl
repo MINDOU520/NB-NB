@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="NBNBEntities">
+    <EntitySetMapping Name="Entry">
+      <EntityTypeMapping TypeName="Model.Entry">
+        <MappingFragment StoreEntitySet="Entry">
+          <ScalarProperty Name="EID" ColumnName="EID" />
+          <ScalarProperty Name="MID" ColumnName="MID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ENum" ColumnName="ENum" />
+          <ScalarProperty Name="ETime" ColumnName="ETime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Feedback">
+      <EntityTypeMapping TypeName="Model.Feedback">
+        <MappingFragment StoreEntitySet="Feedback">
+          <ScalarProperty Name="FBID" ColumnName="FBID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="FBTime" ColumnName="FBTime" />
+          <ScalarProperty Name="FBContent" ColumnName="FBContent" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FeedbackReply">
+      <EntityTypeMapping TypeName="Model.FeedbackReply">
+        <MappingFragment StoreEntitySet="FeedbackReply">
+          <ScalarProperty Name="FRID" ColumnName="FRID" />
+          <ScalarProperty Name="FRTime" ColumnName="FRTime" />
+          <ScalarProperty Name="FRContent" ColumnName="FRContent" />
+          <ScalarProperty Name="MGID" ColumnName="MGID" />
+          <ScalarProperty Name="FBID" ColumnName="FBID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Friends">
+      <EntityTypeMapping TypeName="Model.Friends">
+        <MappingFragment StoreEntitySet="Friends">
+          <ScalarProperty Name="FID" ColumnName="FID" />
+          <ScalarProperty Name="FTime" ColumnName="FTime" />
+          <ScalarProperty Name="FName" ColumnName="FName" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Goods">
+      <EntityTypeMapping TypeName="Model.Goods">
+        <MappingFragment StoreEntitySet="Goods">
+          <ScalarProperty Name="GID" ColumnName="GID" />
+          <ScalarProperty Name="GName" ColumnName="GName" />
+          <ScalarProperty Name="GPrice" ColumnName="GPrice" />
+          <ScalarProperty Name="GPhoto" ColumnName="GPhoto" />
+          <ScalarProperty Name="GColor" ColumnName="GColor" />
+          <ScalarProperty Name="GSize" ColumnName="GSize" />
+          <ScalarProperty Name="GSaled" ColumnName="GSaled" />
+          <ScalarProperty Name="GBiaoshi" ColumnName="GBiaoshi" />
+          <ScalarProperty Name="GDetails" ColumnName="GDetails" />
+          <ScalarProperty Name="GCID" ColumnName="GCID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GoodsComment">
+      <EntityTypeMapping TypeName="Model.GoodsComment">
+        <MappingFragment StoreEntitySet="GoodsComment">
+          <ScalarProperty Name="GCID" ColumnName="GCID" />
+          <ScalarProperty Name="GID" ColumnName="GID" />
+          <ScalarProperty Name="GCTime" ColumnName="GCTime" />
+          <ScalarProperty Name="GCContent" ColumnName="GCContent" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GoodsReply">
+      <EntityTypeMapping TypeName="Model.GoodsReply">
+        <MappingFragment StoreEntitySet="GoodsReply">
+          <ScalarProperty Name="GRID" ColumnName="GRID" />
+          <ScalarProperty Name="GRTime" ColumnName="GRTime" />
+          <ScalarProperty Name="GRContent" ColumnName="GRContent" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="GCID" ColumnName="GCID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Manager">
+      <EntityTypeMapping TypeName="Model.Manager">
+        <MappingFragment StoreEntitySet="Manager">
+          <ScalarProperty Name="MGID" ColumnName="MGID" />
+          <ScalarProperty Name="MGName" ColumnName="MGName" />
+          <ScalarProperty Name="MGPassword" ColumnName="MGPassword" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Match">
+      <EntityTypeMapping TypeName="Model.Match">
+        <MappingFragment StoreEntitySet="Match">
+          <ScalarProperty Name="MID" ColumnName="MID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="MName" ColumnName="MName" />
+          <ScalarProperty Name="MAdder" ColumnName="MAdder" />
+          <ScalarProperty Name="MTime" ColumnName="MTime" />
+          <ScalarProperty Name="MNum" ColumnName="MNum" />
+          <ScalarProperty Name="MAddtime" ColumnName="MAddtime" />
+          <ScalarProperty Name="EID" ColumnName="EID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="News">
+      <EntityTypeMapping TypeName="Model.News">
+        <MappingFragment StoreEntitySet="News">
+          <ScalarProperty Name="NID" ColumnName="NID" />
+          <ScalarProperty Name="NTime" ColumnName="NTime" />
+          <ScalarProperty Name="NTitle" ColumnName="NTitle" />
+          <ScalarProperty Name="NContent" ColumnName="NContent" />
+          <ScalarProperty Name="NAbstract" ColumnName="NAbstract" />
+          <ScalarProperty Name="NImage" ColumnName="NImage" />
+          <ScalarProperty Name="NCID" ColumnName="NCID" />
+          <ScalarProperty Name="NViewnum" ColumnName="NViewnum" />
+          <ScalarProperty Name="NCommentnum" ColumnName="NCommentnum" />
+          <ScalarProperty Name="VID" ColumnName="VID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NewsComment">
+      <EntityTypeMapping TypeName="Model.NewsComment">
+        <MappingFragment StoreEntitySet="NewsComment">
+          <ScalarProperty Name="NCID" ColumnName="NCID" />
+          <ScalarProperty Name="NID" ColumnName="NID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="NCContent" ColumnName="NCContent" />
+          <ScalarProperty Name="NCTime" ColumnName="NCTime" />
+          <ScalarProperty Name="NRID" ColumnName="NRID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NewsReply">
+      <EntityTypeMapping TypeName="Model.NewsReply">
+        <MappingFragment StoreEntitySet="NewsReply">
+          <ScalarProperty Name="NRID" ColumnName="NRID" />
+          <ScalarProperty Name="NRTime" ColumnName="NRTime" />
+          <ScalarProperty Name="NRContent" ColumnName="NRContent" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="NCID" ColumnName="NCID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderItem">
+      <EntityTypeMapping TypeName="Model.OrderItem">
+        <MappingFragment StoreEntitySet="OrderItem">
+          <ScalarProperty Name="ODID" ColumnName="ODID" />
+          <ScalarProperty Name="OID" ColumnName="OID" />
+          <ScalarProperty Name="GID" ColumnName="GID" />
+          <ScalarProperty Name="GNum" ColumnName="GNum" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="Model.Orders">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="OID" ColumnName="OID" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="GID" ColumnName="GID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Tpl" ColumnName="Tpl" />
+          <ScalarProperty Name="Consignee" ColumnName="Consignee" />
+          <ScalarProperty Name="OTime" ColumnName="OTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Posts">
+      <EntityTypeMapping TypeName="Model.Posts">
+        <MappingFragment StoreEntitySet="Posts">
+          <ScalarProperty Name="PID" ColumnName="PID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="PTitle" ColumnName="PTitle" />
+          <ScalarProperty Name="PTime" ColumnName="PTime" />
+          <ScalarProperty Name="PContent" ColumnName="PContent" />
+          <ScalarProperty Name="PViewnum" ColumnName="PViewnum" />
+          <ScalarProperty Name="VID" ColumnName="VID" />
+          <ScalarProperty Name="PCID" ColumnName="PCID" />
+          <ScalarProperty Name="PCommentnum" ColumnName="PCommentnum" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PostsComment">
+      <EntityTypeMapping TypeName="Model.PostsComment">
+        <MappingFragment StoreEntitySet="PostsComment">
+          <ScalarProperty Name="PCID" ColumnName="PCID" />
+          <ScalarProperty Name="PCTime" ColumnName="PCTime" />
+          <ScalarProperty Name="PCContent" ColumnName="PCContent" />
+          <ScalarProperty Name="PID" ColumnName="PID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PostsReply">
+      <EntityTypeMapping TypeName="Model.PostsReply">
+        <MappingFragment StoreEntitySet="PostsReply">
+          <ScalarProperty Name="PRID" ColumnName="PRID" />
+          <ScalarProperty Name="PRTime" ColumnName="PRTime" />
+          <ScalarProperty Name="PRContent" ColumnName="PRContent" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="PCID" ColumnName="PCID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShoppingCart">
+      <EntityTypeMapping TypeName="Model.ShoppingCart">
+        <MappingFragment StoreEntitySet="ShoppingCart">
+          <ScalarProperty Name="SCID" ColumnName="SCID" />
+          <ScalarProperty Name="GID" ColumnName="GID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="SCTime" ColumnName="SCTime" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="Model.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+          <ScalarProperty Name="UserTpl" ColumnName="UserTpl" />
+          <ScalarProperty Name="UserSex" ColumnName="UserSex" />
+          <ScalarProperty Name="UserAvatar" ColumnName="UserAvatar" />
+          <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+          <ScalarProperty Name="UserAge" ColumnName="UserAge" />
+          <ScalarProperty Name="UserHeight" ColumnName="UserHeight" />
+          <ScalarProperty Name="UserWeight" ColumnName="UserWeight" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Video">
+      <EntityTypeMapping TypeName="Model.Video">
+        <MappingFragment StoreEntitySet="Video">
+          <ScalarProperty Name="VID" ColumnName="VID" />
+          <ScalarProperty Name="VName" ColumnName="VName" />
+          <ScalarProperty Name="VTime" ColumnName="VTime" />
+          <ScalarProperty Name="VSavepath" ColumnName="VSavepath" />
+          <ScalarProperty Name="VClicknum" ColumnName="VClicknum" />
+          <ScalarProperty Name="VDownloadnum" ColumnName="VDownloadnum" />
+          <ScalarProperty Name="VSrcimg" ColumnName="VSrcimg" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VideoComment">
+      <EntityTypeMapping TypeName="Model.VideoComment">
+        <MappingFragment StoreEntitySet="VideoComment">
+          <ScalarProperty Name="VCID" ColumnName="VCID" />
+          <ScalarProperty Name="VID" ColumnName="VID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="VCTime" ColumnName="VCTime" />
+          <ScalarProperty Name="VCContent" ColumnName="VCContent" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VideoReply">
+      <EntityTypeMapping TypeName="Model.VideoReply">
+        <MappingFragment StoreEntitySet="VideoReply">
+          <ScalarProperty Name="VRID" ColumnName="VRID" />
+          <ScalarProperty Name="VCID" ColumnName="VCID" />
+          <ScalarProperty Name="VRTime" ColumnName="VRTime" />
+          <ScalarProperty Name="VRContent" ColumnName="VRContent" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

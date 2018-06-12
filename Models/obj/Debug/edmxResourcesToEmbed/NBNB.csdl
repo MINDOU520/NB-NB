@@ -1,0 +1,846 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Entry">
+    <Key>
+      <PropertyRef Name="EID" />
+    </Key>
+    <Property Name="EID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MID" Type="Int32" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="ENum" Type="Int32" />
+    <Property Name="ETime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Entry_Users" FromRole="Entry" ToRole="Users" />
+    <NavigationProperty Name="Match" Relationship="Self.FK_Match_Entry" FromRole="Entry" ToRole="Match" />
+  </EntityType>
+  <EntityType Name="Feedback">
+    <Key>
+      <PropertyRef Name="FBID" />
+    </Key>
+    <Property Name="FBID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="FBTime" Type="DateTime" Precision="3" />
+    <Property Name="FBContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Feedback_Users" FromRole="Feedback" ToRole="Users" />
+    <NavigationProperty Name="FeedbackReply" Relationship="Self.FK_FeedbackReply_Feedback" FromRole="Feedback" ToRole="FeedbackReply" />
+  </EntityType>
+  <EntityType Name="FeedbackReply">
+    <Key>
+      <PropertyRef Name="FRID" />
+    </Key>
+    <Property Name="FRID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FRTime" Type="DateTime" Precision="3" />
+    <Property Name="FRContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MGID" Type="Int32" />
+    <Property Name="FBID" Type="Int32" />
+    <NavigationProperty Name="Feedback" Relationship="Self.FK_FeedbackReply_Feedback" FromRole="FeedbackReply" ToRole="Feedback" />
+    <NavigationProperty Name="Manager" Relationship="Self.FK_FeedbackReply_Manager" FromRole="FeedbackReply" ToRole="Manager" />
+  </EntityType>
+  <EntityType Name="Friends">
+    <Key>
+      <PropertyRef Name="FID" />
+    </Key>
+    <Property Name="FID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FTime" Type="DateTime" Precision="3" />
+    <Property Name="FName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserID" Type="Int32" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Friends_Users" FromRole="Friends" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Goods">
+    <Key>
+      <PropertyRef Name="GID" />
+    </Key>
+    <Property Name="GID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="GPrice" Type="Int32" Nullable="false" />
+    <Property Name="GPhoto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="GColor" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="GSize" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="GSaled" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="GBiaoshi" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="GDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="GCID" Type="Int32" />
+    <NavigationProperty Name="OrderItem" Relationship="Self.FK_OrderItem_Goods" FromRole="Goods" ToRole="OrderItem" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Goods" FromRole="Goods" ToRole="Orders" />
+    <NavigationProperty Name="ShoppingCart" Relationship="Self.FK_ShoppingCart_Goods" FromRole="Goods" ToRole="ShoppingCart" />
+  </EntityType>
+  <EntityType Name="GoodsComment">
+    <Key>
+      <PropertyRef Name="GCID" />
+    </Key>
+    <Property Name="GCID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GID" Type="Int32" Nullable="false" />
+    <Property Name="GCTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="GCContent" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserID" Type="Int32" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_GoodsComment_Users" FromRole="GoodsComment" ToRole="Users" />
+    <NavigationProperty Name="GoodsReply" Relationship="Self.FK_GoodsReply_GoodsComment" FromRole="GoodsComment" ToRole="GoodsReply" />
+  </EntityType>
+  <EntityType Name="GoodsReply">
+    <Key>
+      <PropertyRef Name="GRID" />
+    </Key>
+    <Property Name="GRID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GRTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="GRContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="GCID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="GoodsComment" Relationship="Self.FK_GoodsReply_GoodsComment" FromRole="GoodsReply" ToRole="GoodsComment" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_GoodsReply_Users" FromRole="GoodsReply" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Manager">
+    <Key>
+      <PropertyRef Name="MGID" />
+    </Key>
+    <Property Name="MGID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MGName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MGPassword" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="FeedbackReply" Relationship="Self.FK_FeedbackReply_Manager" FromRole="Manager" ToRole="FeedbackReply" />
+  </EntityType>
+  <EntityType Name="Match">
+    <Key>
+      <PropertyRef Name="MID" />
+    </Key>
+    <Property Name="MID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="MName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MAdder" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MTime" Type="DateTime" Precision="3" />
+    <Property Name="MNum" Type="Int32" />
+    <Property Name="MAddtime" Type="DateTime" Precision="3" />
+    <Property Name="EID" Type="Int32" />
+    <NavigationProperty Name="Entry" Relationship="Self.FK_Match_Entry" FromRole="Match" ToRole="Entry" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Match_Users" FromRole="Match" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="News">
+    <Key>
+      <PropertyRef Name="NID" />
+    </Key>
+    <Property Name="NID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="NContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="NAbstract" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="NCID" Type="Int32" />
+    <Property Name="NViewnum" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="NCommentnum" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="VID" Type="Int32" />
+    <NavigationProperty Name="NewsComment" Relationship="Self.FK_News_NewsComment" FromRole="News" ToRole="NewsComment" />
+    <NavigationProperty Name="Video" Relationship="Self.FK_News_Video" FromRole="News" ToRole="Video" />
+  </EntityType>
+  <EntityType Name="NewsComment">
+    <Key>
+      <PropertyRef Name="NCID" />
+    </Key>
+    <Property Name="NCID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NID" Type="Int32" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="NCContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="NCTime" Type="DateTime" Precision="3" />
+    <Property Name="NRID" Type="Int32" />
+    <NavigationProperty Name="News" Relationship="Self.FK_News_NewsComment" FromRole="NewsComment" ToRole="News" />
+    <NavigationProperty Name="NewsReply" Relationship="Self.FK_NewsComment_NewsReply" FromRole="NewsComment" ToRole="NewsReply" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_NewsComment_Users" FromRole="NewsComment" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="NewsReply">
+    <Key>
+      <PropertyRef Name="NRID" />
+    </Key>
+    <Property Name="NRID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NRTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NRContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="NCID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="NewsComment" Relationship="Self.FK_NewsComment_NewsReply" FromRole="NewsReply" ToRole="NewsComment" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_NewsReply_Users" FromRole="NewsReply" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="OrderItem">
+    <Key>
+      <PropertyRef Name="ODID" />
+    </Key>
+    <Property Name="ODID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OID" Type="Int32" Nullable="false" />
+    <Property Name="GID" Type="Int32" Nullable="false" />
+    <Property Name="GNum" Type="Int32" />
+    <NavigationProperty Name="Goods" Relationship="Self.FK_OrderItem_Goods" FromRole="OrderItem" ToRole="Goods" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_OrderItem_Orders" FromRole="OrderItem" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="OID" />
+    </Key>
+    <Property Name="OID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="GID" Type="Int32" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="Tpl" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Consignee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="OTime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Goods" Relationship="Self.FK_Orders_Goods" FromRole="Orders" ToRole="Goods" />
+    <NavigationProperty Name="OrderItem" Relationship="Self.FK_OrderItem_Orders" FromRole="Orders" ToRole="OrderItem" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Orders_Users" FromRole="Orders" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Posts">
+    <Key>
+      <PropertyRef Name="PID" />
+    </Key>
+    <Property Name="PID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="PTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PTime" Type="DateTime" Precision="3" />
+    <Property Name="PContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PViewnum" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="VID" Type="Int32" />
+    <Property Name="PCID" Type="Int32" />
+    <Property Name="PCommentnum" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PostsComment" Relationship="Self.FK_Posts_PostsComment" FromRole="Posts" ToRole="PostsComment" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Posts_Users" FromRole="Posts" ToRole="Users" />
+    <NavigationProperty Name="Video" Relationship="Self.FK_Posts_Video" FromRole="Posts" ToRole="Video" />
+  </EntityType>
+  <EntityType Name="PostsComment">
+    <Key>
+      <PropertyRef Name="PCID" />
+    </Key>
+    <Property Name="PCID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PCTime" Type="DateTime" Precision="3" />
+    <Property Name="PCContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PID" Type="Int32" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Posts" Relationship="Self.FK_Posts_PostsComment" FromRole="PostsComment" ToRole="Posts" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_PostsComment_Users" FromRole="PostsComment" ToRole="Users" />
+    <NavigationProperty Name="PostsReply" Relationship="Self.FK_PostsReply_PostsComment" FromRole="PostsComment" ToRole="PostsReply" />
+  </EntityType>
+  <EntityType Name="PostsReply">
+    <Key>
+      <PropertyRef Name="PRID" />
+    </Key>
+    <Property Name="PRID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PRTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="PRContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="PCID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="PostsComment" Relationship="Self.FK_PostsReply_PostsComment" FromRole="PostsReply" ToRole="PostsComment" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_PostsReply_Users" FromRole="PostsReply" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="ShoppingCart">
+    <Key>
+      <PropertyRef Name="SCID" />
+    </Key>
+    <Property Name="SCID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GID" Type="Int32" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="SCTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Count" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Goods" Relationship="Self.FK_ShoppingCart_Goods" FromRole="ShoppingCart" ToRole="Goods" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_ShoppingCart_Users" FromRole="ShoppingCart" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserPassword" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="UserTpl" Type="String" MaxLength="11" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="UserSex" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="UserAvatar" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserEmail" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="UserAge" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="UserHeight" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="UserWeight" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="Entry" Relationship="Self.FK_Entry_Users" FromRole="Users" ToRole="Entry" />
+    <NavigationProperty Name="Feedback" Relationship="Self.FK_Feedback_Users" FromRole="Users" ToRole="Feedback" />
+    <NavigationProperty Name="Friends" Relationship="Self.FK_Friends_Users" FromRole="Users" ToRole="Friends" />
+    <NavigationProperty Name="GoodsComment" Relationship="Self.FK_GoodsComment_Users" FromRole="Users" ToRole="GoodsComment" />
+    <NavigationProperty Name="GoodsReply" Relationship="Self.FK_GoodsReply_Users" FromRole="Users" ToRole="GoodsReply" />
+    <NavigationProperty Name="Match" Relationship="Self.FK_Match_Users" FromRole="Users" ToRole="Match" />
+    <NavigationProperty Name="NewsComment" Relationship="Self.FK_NewsComment_Users" FromRole="Users" ToRole="NewsComment" />
+    <NavigationProperty Name="NewsReply" Relationship="Self.FK_NewsReply_Users" FromRole="Users" ToRole="NewsReply" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Users" FromRole="Users" ToRole="Orders" />
+    <NavigationProperty Name="Posts" Relationship="Self.FK_Posts_Users" FromRole="Users" ToRole="Posts" />
+    <NavigationProperty Name="PostsComment" Relationship="Self.FK_PostsComment_Users" FromRole="Users" ToRole="PostsComment" />
+    <NavigationProperty Name="PostsReply" Relationship="Self.FK_PostsReply_Users" FromRole="Users" ToRole="PostsReply" />
+    <NavigationProperty Name="ShoppingCart" Relationship="Self.FK_ShoppingCart_Users" FromRole="Users" ToRole="ShoppingCart" />
+    <NavigationProperty Name="Users1" Relationship="Self.FK_Users_Users" FromRole="Users" ToRole="Users1" />
+    <NavigationProperty Name="Users2" Relationship="Self.FK_Users_Users" FromRole="Users1" ToRole="Users" />
+    <NavigationProperty Name="VideoComment" Relationship="Self.FK_VideoComment_Users" FromRole="Users" ToRole="VideoComment" />
+    <NavigationProperty Name="VideoReply" Relationship="Self.FK_VideoReply_Users" FromRole="Users" ToRole="VideoReply" />
+  </EntityType>
+  <EntityType Name="Video">
+    <Key>
+      <PropertyRef Name="VID" />
+    </Key>
+    <Property Name="VID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="VTime" Type="DateTime" Precision="3" />
+    <Property Name="VSavepath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="VClicknum" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="VDownloadnum" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="VSrcimg" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="News" Relationship="Self.FK_News_Video" FromRole="Video" ToRole="News" />
+    <NavigationProperty Name="Posts" Relationship="Self.FK_Posts_Video" FromRole="Video" ToRole="Posts" />
+    <NavigationProperty Name="VideoComment" Relationship="Self.FK_VideoComment_Video" FromRole="Video" ToRole="VideoComment" />
+  </EntityType>
+  <EntityType Name="VideoComment">
+    <Key>
+      <PropertyRef Name="VCID" />
+    </Key>
+    <Property Name="VCID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VID" Type="Int32" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="VCTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="VCContent" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_VideoComment_Users" FromRole="VideoComment" ToRole="Users" />
+    <NavigationProperty Name="Video" Relationship="Self.FK_VideoComment_Video" FromRole="VideoComment" ToRole="Video" />
+    <NavigationProperty Name="VideoReply" Relationship="Self.FK_VideoReply_VideoComment" FromRole="VideoComment" ToRole="VideoReply" />
+  </EntityType>
+  <EntityType Name="VideoReply">
+    <Key>
+      <PropertyRef Name="VRID" />
+    </Key>
+    <Property Name="VRID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VCID" Type="Int32" Nullable="false" />
+    <Property Name="VRTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="VRContent" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_VideoReply_Users" FromRole="VideoReply" ToRole="Users" />
+    <NavigationProperty Name="VideoComment" Relationship="Self.FK_VideoReply_VideoComment" FromRole="VideoReply" ToRole="VideoComment" />
+  </EntityType>
+  <Association Name="FK_Entry_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Entry" Type="Self.Entry" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Entry">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Match_Entry">
+    <End Role="Entry" Type="Self.Entry" Multiplicity="0..1" />
+    <End Role="Match" Type="Self.Match" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Entry">
+        <PropertyRef Name="EID" />
+      </Principal>
+      <Dependent Role="Match">
+        <PropertyRef Name="EID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Feedback_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Feedback">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeedbackReply_Feedback">
+    <End Role="Feedback" Type="Self.Feedback" Multiplicity="0..1" />
+    <End Role="FeedbackReply" Type="Self.FeedbackReply" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Feedback">
+        <PropertyRef Name="FBID" />
+      </Principal>
+      <Dependent Role="FeedbackReply">
+        <PropertyRef Name="FBID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FeedbackReply_Manager">
+    <End Role="Manager" Type="Self.Manager" Multiplicity="0..1" />
+    <End Role="FeedbackReply" Type="Self.FeedbackReply" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Manager">
+        <PropertyRef Name="MGID" />
+      </Principal>
+      <Dependent Role="FeedbackReply">
+        <PropertyRef Name="MGID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Friends_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Friends">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderItem_Goods">
+    <End Role="Goods" Type="Self.Goods" Multiplicity="1" />
+    <End Role="OrderItem" Type="Self.OrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Goods">
+        <PropertyRef Name="GID" />
+      </Principal>
+      <Dependent Role="OrderItem">
+        <PropertyRef Name="GID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_Goods">
+    <End Role="Goods" Type="Self.Goods" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Goods">
+        <PropertyRef Name="GID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="GID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShoppingCart_Goods">
+    <End Role="Goods" Type="Self.Goods" Multiplicity="0..1" />
+    <End Role="ShoppingCart" Type="Self.ShoppingCart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Goods">
+        <PropertyRef Name="GID" />
+      </Principal>
+      <Dependent Role="ShoppingCart">
+        <PropertyRef Name="GID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GoodsComment_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="GoodsComment" Type="Self.GoodsComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="GoodsComment">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GoodsReply_GoodsComment">
+    <End Role="GoodsComment" Type="Self.GoodsComment" Multiplicity="1" />
+    <End Role="GoodsReply" Type="Self.GoodsReply" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GoodsComment">
+        <PropertyRef Name="GCID" />
+      </Principal>
+      <Dependent Role="GoodsReply">
+        <PropertyRef Name="GCID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GoodsReply_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="GoodsReply" Type="Self.GoodsReply" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="GoodsReply">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Match_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Match" Type="Self.Match" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Match">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_News_NewsComment">
+    <End Role="NewsComment" Type="Self.NewsComment" Multiplicity="0..1" />
+    <End Role="News" Type="Self.News" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NewsComment">
+        <PropertyRef Name="NCID" />
+      </Principal>
+      <Dependent Role="News">
+        <PropertyRef Name="NCID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_News_Video">
+    <End Role="Video" Type="Self.Video" Multiplicity="0..1" />
+    <End Role="News" Type="Self.News" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Video">
+        <PropertyRef Name="VID" />
+      </Principal>
+      <Dependent Role="News">
+        <PropertyRef Name="VID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NewsComment_NewsReply">
+    <End Role="NewsReply" Type="Self.NewsReply" Multiplicity="0..1" />
+    <End Role="NewsComment" Type="Self.NewsComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NewsReply">
+        <PropertyRef Name="NRID" />
+      </Principal>
+      <Dependent Role="NewsComment">
+        <PropertyRef Name="NRID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NewsComment_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="NewsComment" Type="Self.NewsComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="NewsComment">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NewsReply_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="NewsReply" Type="Self.NewsReply" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="NewsReply">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderItem_Orders">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+    <End Role="OrderItem" Type="Self.OrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="OID" />
+      </Principal>
+      <Dependent Role="OrderItem">
+        <PropertyRef Name="OID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Posts_PostsComment">
+    <End Role="PostsComment" Type="Self.PostsComment" Multiplicity="0..1" />
+    <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PostsComment">
+        <PropertyRef Name="PCID" />
+      </Principal>
+      <Dependent Role="Posts">
+        <PropertyRef Name="PCID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Posts_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Posts">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Posts_Video">
+    <End Role="Video" Type="Self.Video" Multiplicity="0..1" />
+    <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Video">
+        <PropertyRef Name="VID" />
+      </Principal>
+      <Dependent Role="Posts">
+        <PropertyRef Name="VID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PostsComment_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="PostsComment" Type="Self.PostsComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="PostsComment">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PostsReply_PostsComment">
+    <End Role="PostsComment" Type="Self.PostsComment" Multiplicity="1" />
+    <End Role="PostsReply" Type="Self.PostsReply" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PostsComment">
+        <PropertyRef Name="PCID" />
+      </Principal>
+      <Dependent Role="PostsReply">
+        <PropertyRef Name="PCID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PostsReply_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="PostsReply" Type="Self.PostsReply" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="PostsReply">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShoppingCart_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="ShoppingCart" Type="Self.ShoppingCart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="ShoppingCart">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Users1" Type="Self.Users" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Users1">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VideoComment_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="VideoComment" Type="Self.VideoComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="VideoComment">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VideoReply_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="VideoReply" Type="Self.VideoReply" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="VideoReply">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VideoComment_Video">
+    <End Role="Video" Type="Self.Video" Multiplicity="1" />
+    <End Role="VideoComment" Type="Self.VideoComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Video">
+        <PropertyRef Name="VID" />
+      </Principal>
+      <Dependent Role="VideoComment">
+        <PropertyRef Name="VID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VideoReply_VideoComment">
+    <End Role="VideoComment" Type="Self.VideoComment" Multiplicity="1" />
+    <End Role="VideoReply" Type="Self.VideoReply" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VideoComment">
+        <PropertyRef Name="VCID" />
+      </Principal>
+      <Dependent Role="VideoReply">
+        <PropertyRef Name="VCID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="NBNBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Entry" EntityType="Self.Entry" />
+    <EntitySet Name="Feedback" EntityType="Self.Feedback" />
+    <EntitySet Name="FeedbackReply" EntityType="Self.FeedbackReply" />
+    <EntitySet Name="Friends" EntityType="Self.Friends" />
+    <EntitySet Name="Goods" EntityType="Self.Goods" />
+    <EntitySet Name="GoodsComment" EntityType="Self.GoodsComment" />
+    <EntitySet Name="GoodsReply" EntityType="Self.GoodsReply" />
+    <EntitySet Name="Manager" EntityType="Self.Manager" />
+    <EntitySet Name="Match" EntityType="Self.Match" />
+    <EntitySet Name="News" EntityType="Self.News" />
+    <EntitySet Name="NewsComment" EntityType="Self.NewsComment" />
+    <EntitySet Name="NewsReply" EntityType="Self.NewsReply" />
+    <EntitySet Name="OrderItem" EntityType="Self.OrderItem" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" />
+    <EntitySet Name="Posts" EntityType="Self.Posts" />
+    <EntitySet Name="PostsComment" EntityType="Self.PostsComment" />
+    <EntitySet Name="PostsReply" EntityType="Self.PostsReply" />
+    <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <EntitySet Name="Video" EntityType="Self.Video" />
+    <EntitySet Name="VideoComment" EntityType="Self.VideoComment" />
+    <EntitySet Name="VideoReply" EntityType="Self.VideoReply" />
+    <AssociationSet Name="FK_Entry_Users" Association="Self.FK_Entry_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Entry" EntitySet="Entry" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Match_Entry" Association="Self.FK_Match_Entry">
+      <End Role="Entry" EntitySet="Entry" />
+      <End Role="Match" EntitySet="Match" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Feedback_Users" Association="Self.FK_Feedback_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Feedback" EntitySet="Feedback" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeedbackReply_Feedback" Association="Self.FK_FeedbackReply_Feedback">
+      <End Role="Feedback" EntitySet="Feedback" />
+      <End Role="FeedbackReply" EntitySet="FeedbackReply" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FeedbackReply_Manager" Association="Self.FK_FeedbackReply_Manager">
+      <End Role="Manager" EntitySet="Manager" />
+      <End Role="FeedbackReply" EntitySet="FeedbackReply" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Friends_Users" Association="Self.FK_Friends_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Friends" EntitySet="Friends" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderItem_Goods" Association="Self.FK_OrderItem_Goods">
+      <End Role="Goods" EntitySet="Goods" />
+      <End Role="OrderItem" EntitySet="OrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_Goods" Association="Self.FK_Orders_Goods">
+      <End Role="Goods" EntitySet="Goods" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShoppingCart_Goods" Association="Self.FK_ShoppingCart_Goods">
+      <End Role="Goods" EntitySet="Goods" />
+      <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GoodsComment_Users" Association="Self.FK_GoodsComment_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="GoodsComment" EntitySet="GoodsComment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GoodsReply_GoodsComment" Association="Self.FK_GoodsReply_GoodsComment">
+      <End Role="GoodsComment" EntitySet="GoodsComment" />
+      <End Role="GoodsReply" EntitySet="GoodsReply" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GoodsReply_Users" Association="Self.FK_GoodsReply_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="GoodsReply" EntitySet="GoodsReply" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Match_Users" Association="Self.FK_Match_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Match" EntitySet="Match" />
+    </AssociationSet>
+    <AssociationSet Name="FK_News_NewsComment" Association="Self.FK_News_NewsComment">
+      <End Role="NewsComment" EntitySet="NewsComment" />
+      <End Role="News" EntitySet="News" />
+    </AssociationSet>
+    <AssociationSet Name="FK_News_Video" Association="Self.FK_News_Video">
+      <End Role="Video" EntitySet="Video" />
+      <End Role="News" EntitySet="News" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NewsComment_NewsReply" Association="Self.FK_NewsComment_NewsReply">
+      <End Role="NewsReply" EntitySet="NewsReply" />
+      <End Role="NewsComment" EntitySet="NewsComment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NewsComment_Users" Association="Self.FK_NewsComment_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="NewsComment" EntitySet="NewsComment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NewsReply_Users" Association="Self.FK_NewsReply_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="NewsReply" EntitySet="NewsReply" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderItem_Orders" Association="Self.FK_OrderItem_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="OrderItem" EntitySet="OrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_Users" Association="Self.FK_Orders_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Posts_PostsComment" Association="Self.FK_Posts_PostsComment">
+      <End Role="PostsComment" EntitySet="PostsComment" />
+      <End Role="Posts" EntitySet="Posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Posts_Users" Association="Self.FK_Posts_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Posts" EntitySet="Posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Posts_Video" Association="Self.FK_Posts_Video">
+      <End Role="Video" EntitySet="Video" />
+      <End Role="Posts" EntitySet="Posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PostsComment_Users" Association="Self.FK_PostsComment_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="PostsComment" EntitySet="PostsComment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PostsReply_PostsComment" Association="Self.FK_PostsReply_PostsComment">
+      <End Role="PostsComment" EntitySet="PostsComment" />
+      <End Role="PostsReply" EntitySet="PostsReply" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PostsReply_Users" Association="Self.FK_PostsReply_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="PostsReply" EntitySet="PostsReply" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShoppingCart_Users" Association="Self.FK_ShoppingCart_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Users" Association="Self.FK_Users_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Users1" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VideoComment_Users" Association="Self.FK_VideoComment_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="VideoComment" EntitySet="VideoComment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VideoReply_Users" Association="Self.FK_VideoReply_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="VideoReply" EntitySet="VideoReply" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VideoComment_Video" Association="Self.FK_VideoComment_Video">
+      <End Role="Video" EntitySet="Video" />
+      <End Role="VideoComment" EntitySet="VideoComment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VideoReply_VideoComment" Association="Self.FK_VideoReply_VideoComment">
+      <End Role="VideoComment" EntitySet="VideoComment" />
+      <End Role="VideoReply" EntitySet="VideoReply" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

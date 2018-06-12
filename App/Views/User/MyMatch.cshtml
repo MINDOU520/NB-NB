@@ -1,0 +1,45 @@
+﻿@model List<App.Models.MatchViewModel1>
+@{
+    ViewBag.Title = "NBNB-我的赛事";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+
+<div class="container">
+    <div class="user-center">
+        <div class="row">
+            <div class="user-all col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                <div class="user-photo">
+                    <img src="@Session["UserAvatar"]" />
+                </div>
+                <ul class="user-all-ul">
+                    <li class="myinfo"><a href="/User/Index">我的信息</a></li>
+                    <li class="mygame user-active"><a href="/User/MyMatch">我的约战</a></li>
+                    <li class="myposts"><a href="/User/MyPosts">我的帖子</a></li>
+                    <li class="mycomment"><a href="/User/MyComment">我的评论</a></li>
+                    <li class="myorder"><a href="/ShoppingCart/Index">我的订单</a></li>
+                    <li class="changeinfo"><a href="/User/Changeinfo">修改信息</a></li>
+                    <li class="logout"><a href="@Url.Action("LogOff", "Login")">注销登录</a></li>
+                </ul>
+            </div>
+            <div class="user-body col-lg-9 col-md-9 col-sm-8 col-xs-6">
+                <h4><span>我的约战</span></h4>
+                <table class="table table-hover">
+                    <tr>
+                        <th>赛事名称</th>
+                        <th>参赛时间</th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.MName</td>    
+                            <td>@item.ety.ETime</td>
+                        </tr>
+                    }
+                </table>
+                
+            </div>
+        </div>
+    </div>
+    
+</div>

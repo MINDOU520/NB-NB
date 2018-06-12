@@ -1,0 +1,107 @@
+﻿@model List<Models.ShoppingCart>
+@{
+    ViewBag.Title = "NBNB-购物车";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="container">
+    <div class="user-center">
+        <div class="row">
+            <div class="user-all col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                <div class="user-photo">
+                    <img src="@Session["UserAvatar"]" />
+                </div>
+                <ul class="user-all-ul">
+                    <li class="myinfo"><a href="/User/Index">我的信息</a></li>
+                    <li class="mygame"><a href="/User/MyMatch">我的约战</a></li>
+                    <li class="myposts"><a href="/User/MyPosts">我的帖子</a></li>
+                    <li class="mycomment"><a href="/User/MyComment">我的评论</a></li>
+                    <li class="myorder user-active"><a href="/ShoppingCart/Index">我的订单</a></li>
+                    <li class="changeinfo"><a href="/User/Changeinfo">修改信息</a></li>
+                    <li class="logout"><a href="@Url.Action("LogOff", "Login")">注销登录</a></li>
+                </ul>
+            </div>
+            <div class="user-body col-lg-9 col-md-9 col-sm-8 col-xs-6">
+                <h4><span>我的订单</span></h4>
+                @using (Html.BeginForm("UpdateAmount", "ShoppingCart"))
+                {
+                    <div>
+                        <table class="table table-hover">
+                            <tr>
+                                <td style="width: 22%;">商品图</td>
+                                <td style="width: 38%;">商品名</td>
+                                <td style="width: 10%;">单价</td>
+                                <td style="width: 20%;">数量</td>
+                                <td style="width: 10%;">合计</td>
+                            </tr>
+                        </table>
+                        @{int subTotal = 0;}
+                        @for (int i = 0; i < Model.Count(); i++)
+                        {
+                            subTotal += Model[i].Goods.GPrice * Model[i].Count;
+
+                            var ddlAmountList = new SelectList(Enumerable.Range(1, 10), Model[i].Count);
+
+                            @Html.HiddenFor(modelitem => Model[i].Goods.GID)
+                            <div class="shoppingcart-list">
+                                <table class="table-bordered table-hover">
+                                    <tr>
+                                        <td style="width: 22%;text-align: center;vertical-align: middle;">
+                                            <img src="@Model[i].Goods.GPhoto" />
+                                        </td>
+                                        <td style="width: 38%;text-align: center;vertical-align: middle;">
+                                            @Model[i].Goods.GName
+                                        </td>
+                                        <td style="width: 10%;text-align: center;vertical-align: middle;">
+                                            @Model[i].Goods.GPrice
+                                        </td>
+                                        <td style="width: 20%;text-align: center;vertical-align: middle;">
+                                            @Html.ActionLink(" ", "Remove", "ShoppingCart", new { id = Model[i].GID }, new { @class = "glyphicon glyphicon-minus-sign"})
+                                            <div>@Model[i].Count</div>
+                                            @Html.ActionLink(" ", "Add", "ShoppingCart", new { id = Model[i].GID }, new { @class = "glyphicon glyphicon-plus-sign" })
+                                        </td>
+                                        <td style="width: 10%;text-align: center;vertical-align: middle;">
+                                            @(Model[i].Goods.GPrice * Model[i].Count)
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        }
+                    </div>
+                    <div class="total-price text-center">
+                        <p>总计：<span style="color: red; font-size: 20px;">￥: @subTotal</span></p>
+                        @*<button class="tjdd btn btn-warning">提交订单</button>*@
+                    </div>
+                }
+                <button class="tjdd btn btn-warning center-block">提交订单</button>
+            </div>
+            <div class="ddinfo">
+                <div class="dd-info-head">
+                    <h3>提交订单</h3>
+                    <div class="dd-info-close" title="关闭">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </div>
+                    <div class="dd-info">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <tr>
+                                    <td>收货人</td>
+                                    <td><input type="text"/></td>
+                                </tr>
+                                <tr>
+                                    <td>收货地址</td>
+                                    <td><input type="text" /></td>
+                                </tr>
+                                <tr>
+                                    <td>联系方式</td>
+                                    <td><input type="text" /></td>
+                                </tr>                               
+                            </table>
+                            <button class="btn btn-warning center-block">付款</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>   
+    </div>
+</div>

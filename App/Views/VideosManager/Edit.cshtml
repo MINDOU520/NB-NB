@@ -1,0 +1,62 @@
+﻿@model Models.Video
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="container">
+    <h2 class="text-center">修改视频</h2>
+    <h4 class="warn text-center">数据无价，确认要修改吗？</h4>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.VID)
+        <table class="table table-hover">
+            <tr>
+                <td>
+                    视频名称
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.VName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.VName, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    上传时间
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.VTime, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.VTime, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    视频保存路径
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.VSavepath, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.VSavepath, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    封面图
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.VSrcimg, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.VSrcimg, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="text-center">
+                    <input type="submit" value="保存" class="btn btn-success" />
+                    @Html.ActionLink("返回视频管理页面", "Index")
+                </td>
+            </tr>
+        </table>
+    }
+</div>

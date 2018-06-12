@@ -1,0 +1,27 @@
+﻿@using Models
+@model  App.Models.MatchViewModel
+
+@{
+    ViewBag.Title = "NBNB-赛事详情";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="container">
+    <div class="match-info">
+        <h2 class="text-center">赛事详情</h2>
+        <p><span class="glyphicon glyphicon-list-alt"> 赛事名称：@Model.match.MName</span></p>
+        <p><span class="glyphicon glyphicon-map-marker"> 比赛地点：@Model.match.MAdder</span></p>
+        <p><span class="glyphicon glyphicon-time"> 比赛时间：@Model.match.MAddtime</span></p>
+        <p><span class="glyphicon glyphicon-star-empty"> 参赛人数：@Model.entries.Count()</span></p>
+        <p><span class="glyphicon glyphicon-user"> 参赛用户：</span></p>
+        <div class="row">
+            @foreach (Entry e in Model.entries)
+            {
+                <div class="joinuser col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <div class="joinuserimg"><img class=" img-circle" src="@e.Users.UserAvatar" /></div>
+                    <span>@e.Users.UserName</span>
+                </div>
+            }
+        </div>
+    </div>
+</div>.

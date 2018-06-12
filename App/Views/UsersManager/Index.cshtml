@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Models.Users>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="manager-head">
+    <div class="container">
+        <div class="manager-header">
+            <span>NBNB篮球约战平台后台管理系统</span>
+            <span>管理员: @Session["MGName"]</span>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="manager-type col-lg-2 col-md-2 col-sm-2 col-xs-4">
+            <ul>
+                <li><a href="/NewsManager/Index">战报管理</a></li>
+                <li><a href="/PostsManager/Index">帖子管理</a></li>
+                <li><a href="/GoodsManager/Index">商品管理</a></li>
+                <li class="type-active"><a href="/UsersManager/Index">用户管理</a></li>
+                <li><a href="/VideosManager/Index">视频管理</a></li>
+                <li><a href="#">评论管理</a></li>
+                <li><a href="#">用户留言</a></li>
+            </ul>
+        </div>
+        <div class="manager-body col-lg-10 col-md-10 col-sm-10 col-xs-8">
+            @using (Html.BeginForm())
+            {
+                <div class="new-search">
+                    <span class="glyphicon glyphicon-search"></span>
+                    @Html.TextBox("SearchString", "", new { @class = "manager-search-text", placeholder = "输入你想搜索的用户" })
+                    <input type="submit" value="搜索" class="btn btn-info" />
+                </div>
+            }
+            <table class="table">
+                <tr>
+                    <th>
+                        用户名
+                    </th>                   
+                    <th>
+                        手机号
+                    </th>
+                    <th>
+                        性别
+                    </th>
+                    <th>
+                        头像
+                    </th>                                      
+                    <th>
+                        管理
+                    </th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>                        
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserTpl)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserSex)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserAvatar)
+                        </td>                       
+                        <td>
+                            @Html.ActionLink("修改", "Edit", new { id = item.UserID }) |
+                            @Html.ActionLink("详情", "Details", new { id = item.UserID }) |
+                            @Html.ActionLink("删除", "Delete", new { id = item.UserID })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>

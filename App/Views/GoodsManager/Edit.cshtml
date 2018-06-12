@@ -1,0 +1,104 @@
+﻿@model Models.Goods
+
+@{
+    ViewBag.Title = "NBNB-管理员-修改商品信息";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="container">
+    <h2 class="text-center">修改商品</h2>
+    <h4 class="warn text-center">数据无价，确认要修改吗？</h4>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.GID)
+        <table class="table table-hover">
+            <tr>
+                <td>
+                    商品名称
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.GName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.GName, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    商品价格
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.GPrice, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.GPrice, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    商品图片
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.GPhoto, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.GPhoto, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    商品颜色
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.GColor, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.GColor, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    商品尺寸
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.GSize, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.GSize, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    商品库存
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.GSaled, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.GSaled, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    商品标识
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.GBiaoshi, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.GBiaoshi, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    商品详情
+                </td>
+                <td>
+                    @Html.TextAreaFor(model => model.GDetails)
+                    @Html.ValidationMessageFor(model => model.GDetails, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="text-center">
+                    <input type="submit" value="保存" class="btn btn-default" />
+                    @Html.ActionLink("返回商品管理主页", "Index")
+                </td>
+            </tr>
+        </table>
+    }
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/ckeditor/config.js"></script>
+    <script type="text/javascript" src="/ckfinder/ckfinder.js"></script>
+    <script type="text/javascript">
+        CKEDITOR.replace('GDetails');
+    </script>
+</div>

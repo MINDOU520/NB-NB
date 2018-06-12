@@ -1,0 +1,67 @@
+﻿@model Models.Posts
+
+@{
+    ViewBag.Title = "NBNB-管理员-帖子详情";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="container">
+    <h2 class="text-center">帖子详情</h2>
+    <table class="table table-hover">
+        <tr>
+            <td>
+                帖子标题
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.PTitle)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                发表时间
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.PTime)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                帖子内容
+            </td>
+            <td>
+                @Html.Raw(HttpUtility.HtmlDecode(Model.PContent))
+            </td>
+        </tr>
+        <tr>
+            <td>
+                浏览数
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.PViewnum)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                评论数
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.PCommentnum)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                发表者
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Users.UserName)
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="text-center">
+                @Html.ActionLink("修改", "Edit", new { id = Model.PID }) |
+                @Html.ActionLink("返回帖子管理页面", "Index")
+            </td>
+        </tr>
+    </table>    
+</div>

@@ -1,0 +1,37 @@
+﻿@model PagedList.IPagedList<Models.Video>
+@using PagedList.Mvc;
+@{
+
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        <div class="new-search">
+            <span class="glyphicon glyphicon-search"></span>
+            @Html.TextBox("SearchString", "", new { @class = "search-text", placeholder = "输入你想搜索的视频" })
+            <input type="submit" value="搜索" class="btn btn-info" />
+        </div>
+    }
+    <h4 class="add-video text-center"><a href="/Videos/AddVideos"><span class="glyphicon glyphicon-cloud-upload"> 上传视频</span></a></h4>
+    @foreach (var item in Model)
+    {
+
+        <div class="video-list col-xs-6 col-sm-4 col-lg-3">
+            <div class="video-img">
+                <a href="@Url.Action("PlayVideo","Videos", new { id =item.VID})">
+                    <img src="@Html.DisplayFor(modelItem => item.VSrcimg)" />
+                    <i class="player"></i>
+                </a>
+            </div>
+            <p><a href="@Url.Action("PlayVideo","Videos", new { id =item.VID})">@Html.DisplayFor(modelItem => item.VName)</a></p>
+        </div>
+    }
+    <div class="page">
+        每页 @Model.PageSize 条记录，共 @Model.PageCount 页，当前第 @Model.PageNumber 页
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </div>
+</div>

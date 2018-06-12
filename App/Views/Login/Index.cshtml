@@ -1,0 +1,305 @@
+﻿@model Models.Users
+@{
+    Layout = null;
+    ViewBag.Title = "NBNB-用户登录";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="~/Images/logoo.png" type="image/x-icon" />
+    <title>@ViewBag.Title</title>
+
+    <link href="@Url.Content("~/Content/bootstrap.css")" type="text/css" rel="stylesheet">
+    <link href="@Url.Content("~/Content/style.css")" type="text/css" rel="stylesheet">
+    <link href="@Url.Content("~/Content/module.css")" type="text/css" rel="stylesheet">
+    <link href="@Url.Content("~/Content/view.css")" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <!-- 头部logo和导航栏 -->
+    <div class="header">
+        <div class="container">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="navbar-header clearfix">
+                    <button type="button" class="navbar-toggle clearfix" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="/Home/Index"><img src="~/Images/logo.png" /></a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="grid">
+                            <a href="#" class="list1">约战</a>
+                        </li>
+                        <li class="grid">
+                            <a href="/News/Index" class="list1">战报</a>
+                        </li>
+                        <li class="grid">
+                            <a href="#" class="list1">论坛</a>
+                        </li>
+                        <li class="grid">
+                            <a href="/goods/Index" class="list1">商城</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="header-info">
+                <div class="header-right search-box">
+                    <a href="#"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+                </div>
+                <div class="header-right login">
+                    @if (Session["UserID"] != null)
+                    {
+                        <a href="/User/Index">
+                            <span class="glyphicon user-ava"><img class="img-circle" src="@Session["UserAvatar"]" /></span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/Login/Index"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+                    }
+                    <div id="loginBox">
+                        @if (Session["UserID"] != null)
+                        {
+                            <div id="userbox">
+                                <div class="user-info">
+                                    <div class="user-avatar">
+                                        @if (Session["UserAvatar"] != null)
+                                        {
+                                            <img class="img-circle" src="@Session["UserAvatar"]" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Images/avt.jpg" />
+                                         }
+                                    </div>
+                                    <div class="user-name">
+                                        <span>@Session["UserName"]</span>
+                                    </div>
+                                </div>
+                                <hr />
+                                <a href="/User/Index"><span class="glyphicon glyphicon-user"> 个人中心</span></a>
+                                <a href="/User/Index"><span class="glyphicon glyphicon-glass"> 我的约战</span></a>
+                                <a href="/User/Index"><span class="glyphicon glyphicon-bell"> 我的消息</span></a>
+                                <a href="@Url.Action("LogOff", "Login")"><span class="glyphicon glyphicon-log-out"> 注销登录</span></a>
+                                <div class="user-other">
+                                    <ul>
+                                        <li><div class="weibo" title="微博"></div></li>
+                                        <li><div class="weixin" title="微信"></div></li>
+                                        <li><div class="qq" title="QQ"></div></li>
+                                        <li><div class="facebook" title="facebook"></div></li>
+                                        <li><div class="twitter" title="twitter"></div></li>
+                                    </ul>
+                                </div>
+                                <div class="user-setting">
+                                    <a href="/User/Index"><span class="glyphicon glyphicon-cog" title="修改个人信息"></span></a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="header-right cart">
+                    <a href="#"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="loginv" style="height: 770px;">
+        <div class="loginbox">
+            <h4>用户登录</h4>
+            @using (Html.BeginForm("Login", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "loginForm" }))
+            {
+                <div class="login-input login-user">
+                    <span class="glyphicon glyphicon-user"></span>
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "login-text", placeholder = "请输入用户名", id = "txtusername" })
+                </div>
+                <div class="login-input login-pwd">
+                    <span class="glyphicon glyphicon-lock"></span>
+                    @Html.TextBoxFor(m => m.UserPassword, new { @class = "login-text", placeholder = "请输入密码", id = "txtpassword", type = "password" })
+                </div>
+                <div class="login-input login-yzm">
+                    <span class="glyphicon glyphicon-ok-circle"></span>
+                    <input id="txtverifcode" name="txtverifcode" class="login-text" placeholder="验证码" type="text" />
+                </div>
+                <div class="yzm-img">
+                    <span class="verifcode">
+                        <label for="checkbox"><input type="checkbox" id="checkbox"> <i>记住我</i></label>
+                        <img id="validimg" src="@Url.Action("GetValidateCode", "CheckCode")" />
+                        <a class="refesh" href="javascript:void(0);" onclick="javascript:document.getElementById('validimg').src='@Url.Action("GetValidateCode", "CheckCode")?time='+new Date().getTime();">
+                            <span class="glyphicon glyphicon-refresh"></span>
+                        </a>
+                    </span>
+                </div>
+                <div class="login-btn">
+                    <input type="submit" id="login" class="btn btn-lg btn-success" value="登录">
+                </div>
+                <div class="to-regi">
+                    <p>
+                        新用户？
+                        <a class="sign" href="@Url.Action("Register", "Register")">点击注册</a>
+                        <span><a href="#">忘记密码？</a></span>
+                    </p>
+                </div>
+            }
+            <a href="/Home/Index"><span class="goto-index">&lt;&lt;返回主页</span></a>
+        </div>
+        <canvas style="width: 100%; height: 100%; position: absolute;"></canvas>
+
+    </div>
+
+    <script src="@Url.Content("~/Scripts/jquery.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap-3.1.1.min.js")"></script>
+
+    <script>
+        $(function () {
+            var canvas = document.querySelector('canvas'),
+                ctx = canvas.getContext('2d')
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            ctx.lineWidth = .3;
+            ctx.strokeStyle = (new Color(150)).style;
+
+            var mousePosition = {
+                x: 30 * canvas.width / 100,
+                y: 30 * canvas.height / 100
+            };
+
+            var dots = {
+                nb: 750,
+                distance: 50,
+                d_radius: 100,
+                array: []
+            };
+
+            function colorValue(min) {
+                return Math.floor(Math.random() * 255 + min);
+            }
+
+            function createColorStyle(r, g, b) {
+                return 'rgba(' + r + ',' + g + ',' + b + ', 0.8)';
+            }
+
+            function mixComponents(comp1, weight1, comp2, weight2) {
+                return (comp1 * weight1 + comp2 * weight2) / (weight1 + weight2);
+            }
+
+            function averageColorStyles(dot1, dot2) {
+                var color1 = dot1.color,
+                    color2 = dot2.color;
+
+                var r = mixComponents(color1.r, dot1.radius, color2.r, dot2.radius),
+                    g = mixComponents(color1.g, dot1.radius, color2.g, dot2.radius),
+                    b = mixComponents(color1.b, dot1.radius, color2.b, dot2.radius);
+                return createColorStyle(Math.floor(r), Math.floor(g), Math.floor(b));
+            }
+
+            function Color(min) {
+                min = min || 0;
+                this.r = colorValue(min);
+                this.g = colorValue(min);
+                this.b = colorValue(min);
+                this.style = createColorStyle(this.r, this.g, this.b);
+            }
+
+            function Dot() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+
+                this.vx = -.5 + Math.random();
+                this.vy = -.5 + Math.random();
+
+                this.radius = Math.random() * 2;
+
+                this.color = new Color();
+                console.log(this);
+            }
+
+            Dot.prototype = {
+                draw: function () {
+                    ctx.beginPath();
+                    ctx.fillStyle = this.color.style;
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                    ctx.fill();
+                }
+            };
+
+            function createDots() {
+                for (i = 0; i < dots.nb; i++) {
+                    dots.array.push(new Dot());
+                }
+            }
+
+            function moveDots() {
+                for (i = 0; i < dots.nb; i++) {
+
+                    var dot = dots.array[i];
+
+                    if (dot.y < 0 || dot.y > canvas.height) {
+                        dot.vx = dot.vx;
+                        dot.vy = - dot.vy;
+                    }
+                    else if (dot.x < 0 || dot.x > canvas.width) {
+                        dot.vx = - dot.vx;
+                        dot.vy = dot.vy;
+                    }
+                    dot.x += dot.vx;
+                    dot.y += dot.vy;
+                }
+            }
+
+            function connectDots() {
+                for (i = 0; i < dots.nb; i++) {
+                    for (j = 0; j < dots.nb; j++) {
+                        i_dot = dots.array[i];
+                        j_dot = dots.array[j];
+
+                        if ((i_dot.x - j_dot.x) < dots.distance && (i_dot.y - j_dot.y) < dots.distance && (i_dot.x - j_dot.x) > - dots.distance && (i_dot.y - j_dot.y) > - dots.distance) {
+                            if ((i_dot.x - mousePosition.x) < dots.d_radius && (i_dot.y - mousePosition.y) < dots.d_radius && (i_dot.x - mousePosition.x) > - dots.d_radius && (i_dot.y - mousePosition.y) > - dots.d_radius) {
+                                ctx.beginPath();
+                                ctx.strokeStyle = averageColorStyles(i_dot, j_dot);
+                                ctx.moveTo(i_dot.x, i_dot.y);
+                                ctx.lineTo(j_dot.x, j_dot.y);
+                                ctx.stroke();
+                                ctx.closePath();
+                            }
+                        }
+                    }
+                }
+            }
+
+            function drawDots() {
+                for (i = 0; i < dots.nb; i++) {
+                    var dot = dots.array[i];
+                    dot.draw();
+                }
+            }
+
+            function animateDots() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                moveDots();
+                connectDots();
+                drawDots();
+
+                requestAnimationFrame(animateDots);
+            }
+
+            $('canvas').on('mousemove', function (e) {
+                mousePosition.x = e.pageX;
+                mousePosition.y = e.pageY;
+            });
+
+            $('canvas').on('mouseleave', function (e) {
+                mousePosition.x = canvas.width / 2;
+                mousePosition.y = canvas.height / 2;
+            });
+
+            createDots();
+            requestAnimationFrame(animateDots);
+        });
+    </script>
+</body>
+</html>

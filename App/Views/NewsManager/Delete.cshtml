@@ -1,0 +1,66 @@
+﻿@model Models.News
+
+@{
+    ViewBag.Title = "NBNB-管理员-删除战报";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="container">
+    <h2 class="text-center">删除战报</h2>
+    <h4 class="warn text-center">数据无价，确认要删除吗？</h4>
+    <table class="table table-hover">
+        <tr>
+            <td>
+                战报标题
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.NTitle)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                上传时间
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.NTime)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                战报内容
+            </td>
+            <td>
+                @Html.Raw(HttpUtility.HtmlDecode(Model.NContent))
+            </td>
+        </tr>
+        <tr>
+            <td>
+                浏览数
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.NViewnum)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                评论数
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.NCommentnum)
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="text-center">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-actions no-color">
+                        <input type="submit" value="删除" class="btn btn-lg btn-danger" /> |
+                        @Html.ActionLink("返回战报管理页面", "Index")
+                    </div>
+                }
+            </td>
+        </tr>
+    </table>
+</div>

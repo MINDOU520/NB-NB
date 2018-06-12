@@ -1,0 +1,256 @@
+﻿@model Models.Users
+@{
+    Layout = null;
+    ViewBag.Title = "NBNB-用户注册";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="~/Images/logoo.png" type="image/x-icon" />
+    <title>@ViewBag.Title</title>
+
+    <link href="@Url.Content("~/Content/bootstrap.css")" type="text/css" rel="stylesheet">
+    <link href="@Url.Content("~/Content/style.css")" type="text/css" rel="stylesheet">
+    <link href="@Url.Content("~/Content/module.css")" type="text/css" rel="stylesheet">
+    <link href="@Url.Content("~/Content/view.css")" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <!-- 头部logo和导航栏 -->
+    <div class="header">
+        <div class="container">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="navbar-header clearfix">
+                    <button type="button" class="navbar-toggle clearfix" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="/Home/Index"><img src="~/Images/logo.png" /></a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="grid">
+                            <a href="#" class="list1">约战</a>                          
+                        </li>
+                        <li class="grid">
+                            <a href="/News/Index" class="list1">战报</a>                            
+                        </li>
+                        <li class="grid">
+                            <a href="#" class="list1">论坛</a>                           
+                        </li>
+                        <li class="grid">
+                            <a href="/goods/Index" class="list1">商城</a>                            
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="header-info">
+                <div class="header-right search-box">
+                    <a href="#"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>                   
+                </div>
+                <div class="header-right login">
+                    @if (Session["UserID"] != null)
+                    {
+                        <a href="/User/Index">
+                            <span class="glyphicon user-ava"><img class="img-circle" src="@Session["UserAvatar"]" /></span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/Login/Index"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+                    }                  
+                    <div id="loginBox">
+                        @if (Session["UserID"] != null)
+                        {
+                            <div id="userbox">
+                                <div class="user-info">
+                                    <div class="user-avatar">
+                                        @if (Session["UserAvatar"] != null)
+                                        {
+                                            <img class="img-circle" src="@Session["UserAvatar"]" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Images/avt.jpg" />
+                                        }
+                                    </div>
+                                    <div class="user-name">
+                                        <span>@Session["UserName"]</span>
+                                    </div>
+                                </div>
+                                <hr />
+                                <a href="/User/Index"><span class="glyphicon glyphicon-user"> 个人中心</span></a>
+                                <a href="/User/Index"><span class="glyphicon glyphicon-glass"> 我的约战</span></a>
+                                <a href="/User/Index"><span class="glyphicon glyphicon-bell"> 我的消息</span></a>
+                                <a href="@Url.Action("LogOff", "Login")"><span class="glyphicon glyphicon-log-out"> 注销登录</span></a>
+                                <div class="user-other">
+                                    <ul>
+                                        <li><div class="weibo" title="微博"></div></li>
+                                        <li><div class="weixin" title="微信"></div></li>
+                                        <li><div class="qq" title="QQ"></div></li>
+                                        <li><div class="facebook" title="facebook"></div></li>
+                                        <li><div class="twitter" title="twitter"></div></li>
+                                    </ul>
+                                </div>
+                                <div class="user-setting">
+                                    <a href="/User/Index"><span class="glyphicon glyphicon-cog" title="修改个人信息"></span></a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="header-right cart">
+                    <a href="#"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="register">
+        <div class="registerbox">
+            <h4>用户注册</h4>
+            @using (Html.BeginForm("Register", "Register", FormMethod.Post, new { id = "RegisterForm", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+                <div class="regi-input regi-user">
+                    <span class="glyphicon glyphicon-user"></span>
+                    @Html.TextBoxFor(model => model.UserName, new { @class = "regi-text", placeholder = "请输入用户名", id = "txtUserName" })
+                </div>
+                <div class="regi-input regi-tel">
+                    <span class="glyphicon glyphicon-phone"></span>
+                    @Html.TextBoxFor(model => model.UserTpl, new { @class = "regi-text", placeholder = "请输入您的手机", id = "txtUserTpl" })
+                </div>
+                <div class="regi-input regi-pwd">
+                    <span class="glyphicon glyphicon-lock"></span>
+                    @Html.TextBoxFor(model => model.UserPassword, new { @class = "regi-text", placeholder = "请输入密码", type = "password", id = "txtPwd" })
+                </div>
+                <div class="regi-avatar">
+                    <span>上传用户头像：</span>
+                    <span class="glyphicon glyphicon-cloud-upload">
+                        <input type="file" name="AvatarFile" class="file-btn" />
+                    </span>
+                </div>
+                <div class="regi-read">
+                    <input type="checkbox" checked="checked" />
+                    <span>我已阅读相关用户协议说明</span>
+                </div>
+                <div class="regi-btn">
+                    <a href="javascript:document.getElementById('RegisterForm').submit()" class="btn btn-lg btn-success" id="btnregister">注册</a>
+                </div>
+            }
+            <a href="/Login/Index"><span class="goto-login">&lt;&lt;返回登录</span></a>
+            <a href="/Home/Index"><span class="goto-index">&lt;&lt;返回主页</span></a>
+        </div>
+        <canvas id="canvas"></canvas>
+        <script>
+            "use strict";
+
+            var canvas = document.getElementById('canvas'),
+                ctx = canvas.getContext('2d'),
+                w = canvas.width = window.innerWidth,
+                h = canvas.height = 770,
+
+                hue = 255,
+                stars = [],
+                count = 0,
+                maxStars = 1200;
+
+            var canvas2 = document.createElement('canvas'),
+                ctx2 = canvas2.getContext('2d');
+            canvas2.width = 100;
+            canvas2.height = 100;
+            var half = canvas2.width / 2,
+                gradient2 = ctx2.createRadialGradient(half, half, 0, half, half, half);
+            gradient2.addColorStop(0.025, 'orange');
+            gradient2.addColorStop(0.1, 'hsl(' + hue + ', 61%, 33%)');
+            gradient2.addColorStop(0.25, 'hsl(' + hue + ', 64%, 6%)');
+            gradient2.addColorStop(1, 'transparent');
+
+            ctx2.fillStyle = gradient2;
+            ctx2.beginPath();
+            ctx2.arc(half, half, half, 0, Math.PI * 2);
+            ctx2.fill();
+
+            // End cache
+
+            function random(min, max) {
+                if (arguments.length < 2) {
+                    max = min;
+                    min = 0;
+                }
+
+                if (min > max) {
+                    var hold = max;
+                    max = min;
+                    min = hold;
+                }
+
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            function maxOrbit(x, y) {
+                var max = Math.max(x, y),
+                    diameter = Math.round(Math.sqrt(max * max + max * max));
+                return diameter / 2;
+            }
+
+            var Star = function () {
+
+                this.orbitRadius = random(maxOrbit(w, h));
+                this.radius = random(60, this.orbitRadius) / 12;
+                this.orbitX = w / 2;
+                this.orbitY = h / 2;
+                this.timePassed = random(0, maxStars);
+                this.speed = random(this.orbitRadius) / 900000;
+                this.alpha = random(2, 10) / 10;
+
+                count++;
+                stars[count] = this;
+            }
+
+            Star.prototype.draw = function () {
+                var x = Math.sin(this.timePassed) * this.orbitRadius + this.orbitX,
+                    y = Math.cos(this.timePassed) * this.orbitRadius + this.orbitY,
+                    twinkle = random(10);
+
+                if (twinkle === 1 && this.alpha > 0) {
+                    this.alpha -= 0.05;
+                } else if (twinkle === 2 && this.alpha < 1) {
+                    this.alpha += 0.05;
+                }
+
+                ctx.globalAlpha = this.alpha;
+                ctx.drawImage(canvas2, x - this.radius / 2, y - this.radius / 2, this.radius, this.radius);
+                this.timePassed += this.speed;
+            }
+
+            for (var i = 0; i < maxStars; i++) {
+                new Star();
+            }
+
+            function animation() {
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.globalAlpha = 0.8;
+                ctx.fillStyle = '#111';
+                ctx.fillRect(0, 0, w, h)
+
+                ctx.globalCompositeOperation = 'lighter';
+                for (var i = 1, l = stars.length; i < l; i++) {
+                    stars[i].draw();
+                };
+
+                window.requestAnimationFrame(animation);
+            }
+
+            animation();
+        </script>
+    </div>
+
+    <script src="@Url.Content("~/Scripts/jquery.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap-3.1.1.min.js")"></script>
+</body>
+</html>

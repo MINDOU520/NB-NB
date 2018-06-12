@@ -1,0 +1,63 @@
+﻿.manager-head {
+    height: 100px;
+    background-color: #888;
+}
+
+.manager-header {
+    border-left: 3px solid #757575;
+    height: 100px;
+    padding: 30px 5px;
+}
+
+.manager-header span:first-child {
+    color: #c34b1d;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.manager-header span:last-child {
+    float: right;
+    font-size: 18px;
+}
+
+.manager-type {
+    padding: 0;
+    height: 100%;
+    background-color: #b5b5b5;
+}
+
+.manager-type li {
+    padding: 5px;      
+    text-align: center;
+}
+
+.manager-type li a {
+    color: #333;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.manager-type li:hover {
+    background-color: #c34b1d;
+}
+
+.manager-body {
+    padding: 0 20px;
+}
+
+.manager-index h4 {
+    color: red;
+    margin: 50px;
+    font-weight: 700;
+}
+
+.manager-index p {
+    color: orangered;
+    font-size: 18px;
+}
+
+.manager-search-text {
+    width: 220px;
+    height: 34px;
+    border: none;
+}

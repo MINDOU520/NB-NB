@@ -1,0 +1,164 @@
+﻿@using Models;
+@model App.Models.GoodsViewModel
+@{
+    ViewBag.Title = "NBNB-商品详情";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="container">
+    <div class="goods-info">
+        <div class="row">
+            <div class="col-lg-4 col-md-5 col-sm-7">
+                <div class="commidity-img">
+                    <div class="img-magnifier-container">
+                        <img id="myimage" src="@Html.DisplayFor(model => model.Goods2.GPhoto)" />
+                    </div>
+                </div>
+            </div>
+            <div class="goods-info-other col-lg-8 col-md-7 col-sm-5">
+                <div class="goods-name">
+                    <h2>@Html.DisplayFor(model => model.Goods2.GName)</h2>
+                </div>
+                <div class="goods-price">
+                    <span>￥:</span>
+                    <span>@Html.DisplayFor(model => model.Goods2.GPrice)</span>
+                </div>
+                <div class="goods-size">
+                    <span>尺寸:</span>
+                    <span>@Html.DisplayFor(model => model.Goods2.GSize)</span>
+                </div>
+                <div class="goods-color">
+                    <span>颜色:</span>
+                    <span>@Html.DisplayFor(model => model.Goods2.GColor)</span>
+                </div>
+                <div class="goods-saled">
+                    <span>库存:</span>
+                    <span>@Html.DisplayFor(model => model.Goods2.GSaled)</span>
+                </div>
+                @if (Session["UserName"] != null)
+                {
+                    @Html.ActionLink("加入购物车", "Add", "ShoppingCart", new { id = Model.Goods2.GID }, new { @class = "btn btn-warning add-to-cart" }) ;
+                }
+                else
+                {
+                    @Html.ActionLink("加入购物车", "Index", "Login", new { @class = "btn btn-warning add-to-cart" });
+                }
+                <button class="btn btn-success buy">购买</button>
+            </div>
+        </div>      
+    </div>
+    <div class="deta-buy-comm">
+        <div class="row">
+            <div class="goods-detail goods-active col-lg-4 col-md-4 col-sm-4 col-xs-4">商品详情</div>
+            <div class="goods-buy col-lg-4 col-md-4 col-sm-4 col-xs-4">成交记录</div>
+            <div class="goods-comm col-lg-4 col-md-4 col-sm-4 col-xs-4">买家评论</div>
+        </div>
+    </div>
+    <ul class="goods-info-ul">
+        <li class="goods-deta-li">
+            <div class="goods-details">
+                <h4><span>商品详情</span></h4>
+                @Html.Raw(HttpUtility.HtmlDecode(Model.Goods2.GDetails))
+                <div class="read-end">
+                    <p>~END~</p>
+                </div>
+            </div>
+        </li>
+        <li class="goods-buy-li">
+            <div class="goods-goumai">
+                <h4><span>成交记录</span></h4>
+            </div>
+        </li>
+        <li class="goods-comm-li">
+            <div class="goods-comment">
+                <h4><span>买家评论</span></h4>
+                <div class="news-area">
+                    @using (Html.BeginForm("Comment", "Goods", FormMethod.Post, new { id = "Comment", @class = "postbox" }))
+                    {
+                        <div class="row">
+                            <div class="textarea-wrapper col-lg-10 col-md-10 col-sm-10 col-xs-8">
+                                <textarea id="Commenttextarea" class="textarea" name="Commenttextarea"></textarea>
+                            </div>
+                            <input type="hidden" name="gid" value="@Model.Goods2.GID" />
+                            @if (Session["UserName"] != null)
+                            {
+                            <a href="javascript:document.getElementById('Comment').submit()" class="btn btn-success col-lg-2 col-md-2 col-sm-2 col-xs-4">发表评论</a>
+                            }
+                            else
+                            {
+                            <a href="@Url.Action("Index", "Login")" class="btn btn-success col-lg-2 col-md-2 col-sm-2 col-xs-4">发表评论</a>
+                            }
+                        </div>
+                    }
+                </div>
+                <div class="new-comment">
+                    <h4><span>全部评论</span></h4>
+                    @foreach (GoodsComment n in Model.GoodsComment1)
+                    {
+                        if (Session["UserName"] != null)
+                        {
+                            <a href="@Url.Action("Index","User", new { id =n.UserID})">
+                                <img class="img-circle" src="@n.Users.UserAvatar" />
+                            </a>
+                            <span><a href="@Url.Action("Index","User", new { id =n.UserID})"> @n.Users.UserName</a></span>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Index","Login")">
+                                <img class="img-circle" src="@n.Users.UserAvatar" />
+                            </a>
+                            <span><a href="@Url.Action("Index","Login")">@n.Users.UserName</a></span>
+                        }
+                        <div class="news-comm">
+                            <div class="nccontent">@Html.Raw(n.GCContent)</div>
+                            <span class="glyphicon glyphicon-time"> @String.Format("{0:yyyy-MM-dd HH:mm}", n.GCTime)</span>
+                            <span class="rep">回复</span>
+                            @using (Html.BeginForm("Reply", "Goods", FormMethod.Post, new { id = "Reply", @class = "rep-postbox" }))
+                            {
+                                <div class="row">
+                                    <div class="textarea-wrapper col-lg-10 col-md-10 col-sm-10 col-xs-8">
+                                        <textarea id="Commenttextareas" class="textarea" name="Commenttextareas"></textarea>
+                                    </div>
+                                    <input type="hidden" name="gid" value="@Model.Goods2.GID" />
+                                    <input type="hidden" name="gcid" value="@n.GCID" />
+                                    @if (Session["UserName"] != null)
+                                    {
+                                        <a href="javascript:document.getElementById('Reply').submit()" class="btn btn-success col-lg-2 col-md-2 col-sm-2 col-xs-4">回复</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("Index", "Login")" class="btn btn-success col-lg-2 col-md-2 col-sm-2 col-xs-4">回复</a>
+                                    }
+                                </div>
+                            }
+                            @foreach (GoodsReply r in Model.GoodsReply1.Where(o => o.GCID == n.GCID))
+                            {
+                                <div class="reply-content">
+                                    @if (Session["UserName"] != null)
+                                    {
+                                    <a href="@Url.Action("Index","User", new { id =r.UserID})">
+                                        <img class="img-circle" src="@r.Users.UserAvatar" width="20" height="20" />
+                                    </a>
+                                    <span><a href="@Url.Action("Index","User", new { id =r.UserID})"> @r.Users.UserName</a></span>
+                                    }
+                                    else
+                                    {
+                                    <a href="@Url.Action("Index","Login")">
+                                        <img class="img-circle" src="@r.Users.UserAvatar" width="20" height="20" />
+                                    </a>
+                                    <span><a href="@Url.Action("Index","Login")">@r.Users.UserName</a></span>
+                                    }
+                                    <div class="news-comm">
+                                        <div>@Html.Raw(r.GRContent)</div>
+                                        <span class="glyphicon glyphicon-time"> @String.Format("{0:yyyy-MM-dd HH:mm}", r.GRTime)</span>
+
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
